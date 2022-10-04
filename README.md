@@ -49,7 +49,7 @@ wiki数据源自wikidump
 | Infobox  | 网页实体的属性表，贴在网页的 |    以`{{}}`为标志，在网页的开头，可能没有    |
 | summary  |        网页实体的简介        |     在infobox和para之间，的一个简短文本      |
 |   para   |    实体各个方面的详细介绍    | 以`==xx==`为标志，遇到的第一个就是para的开始 |
-| category |      实体属于的类别链接      |  以`[[Category:xx|xx]]`为标志，在网页的末尾  |
+| category |      实体属于的类别链接      |  以`[[Category:xx]]`为标志，在网页的末尾  |
 
 以一个网页为例子
 
