@@ -52,8 +52,6 @@ def process_wiki_page(s):
     return item
 
 def extract_4_item_of_wiki_bz2_file(bz2_file,des_file):
-    json_file="data/wiki_page_1.json"
-    "data/zhwiki-20220801-pages-articles-multistream.xml.bz2"
     wiki = extract_pages(bz2file.open(bz2_file))
     w = tqdm(wiki, desc=u'已获取0篇文章')
     count=0

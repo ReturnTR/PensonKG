@@ -78,7 +78,7 @@ wiki数据源自wikidump
 
 ![image](https://github.com/ReturnTR/PensonKG/blob/main/images/wiki_数据实例.png)
 
-## 初步格式化(抽取出上面的4项)
+## 初步格式化(抽取出上面提到的的4项)
 
 根据前面分析的四项，通过特定的规则将他们抽取出来，同时尽量保留原有信息
 
@@ -86,11 +86,19 @@ wiki数据源自wikidump
 - 在正文和简介中，除了[[]]标签和[]标签，去掉所有的其他标签，只保留文字与标点符号
 - 保留infobox与category的全部内容
 
-抽取代码见
+[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/code/WikiProcess.py)
 
 ## 抽取出有infobox的人物页面
 
-目标是人物图谱，所以需要将人物页面截取过来，由于判断是否是人物的方法很复杂，因此先通过infobox里面的表示识别出部分的图谱，然后
+目标是人物图谱，所以需要将人物页面截取过来，由于判断是否是人物的方法很复杂，因此先通过infobox里面的标识识别出部分的人物
+
+
+
+为此需要先找到全部的infobox人物模板标识，找到了该网页下的所有模板那
+
+
+
+
 
 
 
