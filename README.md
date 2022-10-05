@@ -1,15 +1,19 @@
 
+
 <!-- TOC -->
 
 - [Wiki原始语料获取](#wiki%E5%8E%9F%E5%A7%8B%E8%AF%AD%E6%96%99%E8%8E%B7%E5%8F%96)
 - [数据分析与处理](#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%84%E7%90%86)
-    - [1. <a name='Wikidumpxml'></a>Wikidumpxml数据格式分析](#1-a-namewikidumpxmlawikidumpxml%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%88%86%E6%9E%90)
-    - [2. <a name='text'></a>网页内容（<text>标签内容）格式分析](#2-a-nametexta%E7%BD%91%E9%A1%B5%E5%86%85%E5%AE%B9text%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%A0%BC%E5%BC%8F%E5%88%86%E6%9E%90)
-    - [3. <a name='4'></a>初步格式化抽取出上面提到的的4项](#3-a-name4a%E5%88%9D%E6%AD%A5%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8A%BD%E5%8F%96%E5%87%BA%E4%B8%8A%E9%9D%A2%E6%8F%90%E5%88%B0%E7%9A%84%E7%9A%844%E9%A1%B9)
-    - [4. <a name='infobox'></a>抽取出有infobox的人物页面面](#4-a-nameinfoboxa%E6%8A%BD%E5%8F%96%E5%87%BA%E6%9C%89infobox%E7%9A%84%E4%BA%BA%E7%89%A9%E9%A1%B5%E9%9D%A2%E9%9D%A2)
-    - [5. <a name='Infobox'></a>对人物Infobox进行属性抽取取](#5-a-nameinfoboxa%E5%AF%B9%E4%BA%BA%E7%89%A9infobox%E8%BF%9B%E8%A1%8C%E5%B1%9E%E6%80%A7%E6%8A%BD%E5%8F%96%E5%8F%96)
+    - [1. Wikidumpxml数据格式分析](#1-wikidumpxml%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%88%86%E6%9E%90)
+    - [2. 网页内容（<text>标签内容）格式分析](#2-%E7%BD%91%E9%A1%B5%E5%86%85%E5%AE%B9text%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%A0%BC%E5%BC%8F%E5%88%86%E6%9E%90)
+    - [3. 初步格式化抽取出上面提到的的4项](#3-%E5%88%9D%E6%AD%A5%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8A%BD%E5%8F%96%E5%87%BA%E4%B8%8A%E9%9D%A2%E6%8F%90%E5%88%B0%E7%9A%84%E7%9A%844%E9%A1%B9)
+    - [4. 抽取出有infobox的人物页面面](#4-%E6%8A%BD%E5%8F%96%E5%87%BA%E6%9C%89infobox%E7%9A%84%E4%BA%BA%E7%89%A9%E9%A1%B5%E9%9D%A2%E9%9D%A2)
+    - [5. 对人物Infobox进行属性抽取取](#5-%E5%AF%B9%E4%BA%BA%E7%89%A9infobox%E8%BF%9B%E8%A1%8C%E5%B1%9E%E6%80%A7%E6%8A%BD%E5%8F%96%E5%8F%96)
+    - [6. 编写抽取规则](#6-%E7%BC%96%E5%86%99%E6%8A%BD%E5%8F%96%E8%A7%84%E5%88%99)
 
 <!-- /TOC -->
+
+
 # Wiki原始语料获取
 
 wiki数据源自wikidump
@@ -20,7 +24,7 @@ wiki数据源自wikidump
 
 # 数据分析与处理
 
-## 1. <a name='Wikidumpxml'></a>Wikidump`xml`数据格式分析
+## Wikidump`xml`数据格式分析
 
 ```xml
 <mediawiki xmlns="http://www.mediawiki.org/xml/export-0.10/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.10/ http://www.mediawiki.org/xml/export-0.10.xsd" version="0.10" xml:lang="zh">
@@ -46,7 +50,7 @@ wiki数据源自wikidump
 
 原始数据大小2.7个G，解压后有11个G，共有1294948个页面
 
-## 2. <a name='text'></a>网页内容（`<text>`标签内容）格式分析
+## 网页内容（`<text>`标签内容）格式分析
 
 经过分析，网页可分为4个部分
 
@@ -84,7 +88,7 @@ wiki数据源自wikidump
 
 ![image](https://github.com/ReturnTR/PensonKG/blob/main/images/wiki_数据实例.png)
 
-## 3. <a name='4'></a>初步格式化(抽取出上面提到的的4项))
+## 初步格式化(抽取出上面提到的的4项))
 
 根据前面分析的四项，通过特定的规则将他们抽取出来，同时尽量保留原有信息
 
@@ -94,7 +98,7 @@ wiki数据源自wikidump
 
 [抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/code/WikiProcess.py)
 
-## 4. <a name='infobox'></a>抽取出有infobox的人物页面面
+## 抽取出有infobox的人物页面面
 
 目标是人物图谱，所以需要将人物页面截取过来，由于判断是否是人物的方法很复杂，因此先通过infobox里面的标识识别出部分的人物
 
@@ -126,7 +130,7 @@ wiki数据源自wikidump
 
 [抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/code/GetPersonViaInfobox.py)
 
-## 5. <a name='Infobox'></a>对人物Infobox进行属性抽取取
+## 对人物Infobox进行属性抽取取
 
 ```xml
 {{Infobox NBA Player
@@ -208,7 +212,7 @@ wiki数据源自wikidump
 
 1. 将模板的属性表全部列出，形成一个大的，整体的模板，包括：
 
-1. 1. 对每个infobox模板拆分，这时一个属性的内容有：中文，英文，额外格式信息
+2. 1. 对每个infobox模板拆分，这时一个属性的内容有：中文，英文，额外格式信息
    2. 将重复的放在一起，并计数，重复的包括英文和中文
 
    最后形成如下的结构：
@@ -223,8 +227,19 @@ wiki数据源自wikidump
    }
    ```
 
-2. 分析模板中的属性值，设计抽取规则
+3. 分析模板中的属性值，设计抽取规则
+
+
 
 [抽取代码]()
 
 [抽取结果]()
+
+## 编写抽取规则
+
+查看每个属性的解释说明，编写规则进行抽取
+
+为了规范抽取方式，采用接口进行抽取，包括：
+
+
+
