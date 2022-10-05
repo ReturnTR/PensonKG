@@ -1,15 +1,18 @@
 
-
+目录
+=======
 <!-- TOC -->
 
+- [目录](#%E7%9B%AE%E5%BD%95)
 - [Wiki原始语料获取](#wiki%E5%8E%9F%E5%A7%8B%E8%AF%AD%E6%96%99%E8%8E%B7%E5%8F%96)
 - [数据分析与处理](#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%84%E7%90%86)
     - [1. Wikidumpxml数据格式分析](#1-wikidumpxml%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%88%86%E6%9E%90)
     - [2. 网页内容（<text>标签内容）格式分析](#2-%E7%BD%91%E9%A1%B5%E5%86%85%E5%AE%B9text%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%A0%BC%E5%BC%8F%E5%88%86%E6%9E%90)
-    - [3. 初步格式化抽取出上面提到的的4项](#3-%E5%88%9D%E6%AD%A5%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8A%BD%E5%8F%96%E5%87%BA%E4%B8%8A%E9%9D%A2%E6%8F%90%E5%88%B0%E7%9A%84%E7%9A%844%E9%A1%B9)
-    - [4. 抽取出有infobox的人物页面面](#4-%E6%8A%BD%E5%8F%96%E5%87%BA%E6%9C%89infobox%E7%9A%84%E4%BA%BA%E7%89%A9%E9%A1%B5%E9%9D%A2%E9%9D%A2)
-    - [5. 对人物Infobox进行属性抽取取](#5-%E5%AF%B9%E4%BA%BA%E7%89%A9infobox%E8%BF%9B%E8%A1%8C%E5%B1%9E%E6%80%A7%E6%8A%BD%E5%8F%96%E5%8F%96)
-    - [6. 编写抽取规则](#6-%E7%BC%96%E5%86%99%E6%8A%BD%E5%8F%96%E8%A7%84%E5%88%99)
+    - [3. 页面初步格式化抽取出上面提到的的4项](#3-%E9%A1%B5%E9%9D%A2%E5%88%9D%E6%AD%A5%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8A%BD%E5%8F%96%E5%87%BA%E4%B8%8A%E9%9D%A2%E6%8F%90%E5%88%B0%E7%9A%84%E7%9A%844%E9%A1%B9)
+    - [4. 选取人物页面](#4-%E9%80%89%E5%8F%96%E4%BA%BA%E7%89%A9%E9%A1%B5%E9%9D%A2)
+    - [5. 对人物Infobox进行属性抽取](#5-%E5%AF%B9%E4%BA%BA%E7%89%A9infobox%E8%BF%9B%E8%A1%8C%E5%B1%9E%E6%80%A7%E6%8A%BD%E5%8F%96)
+        - [5.1. 属性的定义（抽取什么属性）](#51-%E5%B1%9E%E6%80%A7%E7%9A%84%E5%AE%9A%E4%B9%89%E6%8A%BD%E5%8F%96%E4%BB%80%E4%B9%88%E5%B1%9E%E6%80%A7)
+        - [5.2. 编写抽取规则](#52-%E7%BC%96%E5%86%99%E6%8A%BD%E5%8F%96%E8%A7%84%E5%88%99)
 
 <!-- /TOC -->
 
@@ -25,7 +28,7 @@ wiki数据源自wikidump
 # 数据分析与处理
 
 ## Wikidump`xml`数据格式分析
-
+原始文件XML数据格式如下
 ```xml
 <mediawiki xmlns="http://www.mediawiki.org/xml/export-0.10/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.10/ http://www.mediawiki.org/xml/export-0.10.xsd" version="0.10" xml:lang="zh">
     <!--一个page表示一个网页，数据由1294978个page组成-->
@@ -47,12 +50,13 @@ wiki数据源自wikidump
     </page>
 </mediawiki>
 ```
+可以发现该文件有多个`<page>`（页面）标签组成
 
-原始数据大小2.7个G，解压后有11个G，共有1294948个页面
+原始数据大小2.7个G，解压后有11个G，共有1294948个page
 
 ## 网页内容（`<text>`标签内容）格式分析
 
-经过分析，网页可分为4个部分
+经过分析，每个page可分为4个部分
 
 | 网页部分 |             描述             |                   识别标志                   |
 | :------: | :--------------------------: | :------------------------------------------: |
@@ -88,7 +92,7 @@ wiki数据源自wikidump
 
 ![image](https://github.com/ReturnTR/PensonKG/blob/main/images/wiki_数据实例.png)
 
-## 初步格式化(抽取出上面提到的的4项))
+## 页面初步格式化(抽取出上面提到的的4项)
 
 根据前面分析的四项，通过特定的规则将他们抽取出来，同时尽量保留原有信息
 
@@ -98,13 +102,17 @@ wiki数据源自wikidump
 
 [抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/code/WikiProcess.py)
 
-## 抽取出有infobox的人物页面面
+## 选取人物页面
 
-目标是人物图谱，所以需要将人物页面截取过来，由于判断是否是人物的方法很复杂，因此先通过infobox里面的标识识别出部分的人物
+目标是人物图谱，所以需要将人物页面截取过来，本方案通过infobox里面的标识识别出部分的人物
 
-为此需要先找到全部的infobox人物模板标识，Wiki提供了人物 infobox 的标识，见[分类:人物信息框模板 - 维基百科，自由的百科全书 (wikipedia.org)](https://zh.wikipedia.org/wiki/Category:人物信息框模板)（在wiki中infobox被称为信息框）
+该方案不能将没有infobox的人物识别出来
 
-全部的信息框文件
+方法：
+- 找到全部的infobox人物模板标识，Wiki提供了人物infobox的标识，见[人物信息框模板](https://zh.wikipedia.org/wiki/Category:人物信息框模板)（在wiki中infobox被称为信息框）
+- 在页面中匹配人物标识
+
+
 
 例如
 
@@ -124,118 +132,43 @@ wiki数据源自wikidump
 
 其中`Infobox NBA Player`为infobox的开头，表示页面的类型，而该类型出来在上述的人物信息框模板中，因此该页面被认为是人物的页面
 
-为此，我们需要将该网页下所有的模板记录在案，然后对每一个页面的infobox开头进行匹配，匹配成功则将其归类到人物页面中
+为此，我们需要将该网页下所有的模板记录在列表中，然后对每一个页面的infobox开头进行匹配，匹配成功则将其归类到人物页面中
 
+[抽取代码和模板列表](https://github.com/ReturnTR/PensonKG/blob/main/code/GetPersonViaInfobox.py)
 
+## 对人物Infobox进行属性抽取
 
-[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/code/GetPersonViaInfobox.py)
+我们需要抽取出人物的基本属性，为此我们需要确定**属性的定义**以及**属性的抽取方法**
 
-## 对人物Infobox进行属性抽取取
+### 属性的定义（抽取什么属性）
+由于属性在人物信息框模板里本来就定义好了，因此我们只需要将总结所有模板的属性，即将多个模板合起来形成一个大的，整体的模板
 
-```xml
-{{Infobox NBA Player
-| name = 姚明<br/>Yao Ming
-| image = YaoMingonoffense2.jpg
-| height_ft   = 7
-| height_in   = 5
-| weight_lb   = 310
-| nationality = {{PRC}}
-| birth_date = {{Birth date and age|1980|9|12}}
-| birth_place = {{CHN}}[[上海市]][[徐匯區]]
-| high_school = 
-| college = [[上海交通大学安泰经济与管理学院]]<ref>{{cite web | language = zh-hans | publisher = 网易网> 教育频道>正文 | title = 姚明正式就读上海交通大学经济类本科(组图) | url = http://edu.163.com/11/1107/22/7I9RATJI00293L7F.html | author = 本文来源：新华网；责任编辑：王晓易 | date = 2011年11月7日 | accessdate = 2011年11月7日 | archive-date = 2017年8月7日 | archive-url = https://web.archive.org/web/20170807152231/http://edu.163.com/11/1107/22/7I9RATJI00293L7F.html | dead-url = no }}</ref><!-- [[香港大学]]荣誉社会科学博士<ref>{{cite web | language = zh-hans | publisher = 网易网>教育频道>考研>最新资讯>正文 | title = 姚明获颁港大名誉博士学位 梁振英亲自颁授 | url = http://edu.163.com/12/1128/13/8HDCIQSL00293NU2.html | author = 本文来源：中国新闻网；责任编辑：王晓易 | date = 2012年11月28日 | accessdate = 2012年11月28日 | archive-url = https://web.archive.org/web/20121130141208/http://edu.163.com/12/1128/13/8HDCIQSL00293NU2.html | archive-date = 2012年11月30日 | dead-url = yes }}</ref>  -->
-| position    = 第六任主席
-| draft_round = 1
-| draft_pick = 1
-| draft_team = [[休士頓火箭]]
-| draft_year = 2002
-| career_position = [[中鋒 (籃球)|中鋒]]
-| career_start    = 1997年
-| career_end      = 2011年
-| career_number   = 11
-| years1          = 1997－2002
-| team1           = [[上海大鯊魚籃球俱樂部|上海大鯊魚]] 
-| years2          = {{nbay|2002|start}}－{{nbay|2010|end}}
-| team2           = [[休士頓火箭]]
-| awards =
-<div>
-* 8×[[NBA全明星賽]]（2003－2009、2011）
-* 2×[[NBA最佳陣容|NBA年度第二隊]]（2007、2009）
-* 3×[[NBA最佳陣容|NBA年度第三隊]]（2004、2006、2008）
-* [[NBA最佳新秀陣容|NBA最佳新秀陣容第一隊]](2003)
-* 11号[[球衣]]为[[休士頓火箭]]所[[退役]]
-* [[中國男子籃球職業聯賽|CBA總冠軍]]（2002）
-* [[中国男子篮球职业联赛常规赛最有价值球员|CBA常规赛最有价值球员]]（2001）<ref name="联赛MVP">{{Cite web|title=CBA历届冠亚军及总决赛MVP回顾：广东八一争霸_体育频道_凤凰网|url=http://sports.ifeng.com/lanqiu/special/2013cba-finals/content-4/detail_2013_03/21/23352673_0.shtml|work=sports.ifeng.com|accessdate=2019-02-12|archive-url=https://web.archive.org/web/20190213005531/http://sports.ifeng.com/lanqiu/special/2013cba-finals/content-4/detail_2013_03/21/23352673_0.shtml|archive-date=2019-02-13|dead-url=yes}}</ref>
-* 3×[[中国男子篮球职业联赛篮板王|CBA篮板王]]（2000、2001、2002）
-* 3×[[中国男子篮球职业联赛盖帽王|CBA盖帽王]]（2000、2001、2002）
-* 2×[[中国男子篮球职业联赛扣篮王|CBA扣篮王]]（2000、2001）
-* 15号球衣被上海大鲨鱼退役
-* [[勞倫斯世界體育獎#年度最佳新人獎|勞倫斯世界體育獎-年度最佳新人]]（2003）
-* [[ESPN]]全球最有潛力運動員（2000）
-*[[上海市]]第十一屆[[全國政協委員]](2008)
-*[[上海市]]第十一屆[[全國政協委員|全國政協委員會常務委員]](2008)
-*[[上海市]]第十二屆[[全國政協委員]](2013-2017)
-*[[上海市]]第十三屆[[全國政協委員]](2017－)
-*[[劳伦斯世界体育奖#年度体育精神奖|劳伦斯世界体育奖-年度体育精神奖]]（2015）
-* 3×[[亞洲盃籃球賽]]MVP（2001、2003、{{tsl|en|2005 FIBA Asia Championship|2005}}）
-|stats_league = NBA
-|stat1label = [[得分]]
-|stat1value = 9,247（場均19.0分）
-|stat2label = [[籃板]]
-|stat2value = 4,494（場均9.2個）
-|stat3label = [[助攻]]
-|stat3value = 920（場均1.9次）
-|letter = m
-|bbr = mingya01
-|HOF_player=yao-ming
-|medaltemplates = 
-{{MedalCountry|{{CHN-1949}}}}
-{{MedalSport|男子篮球}}
-{{MedalCompetition|亞洲青年籃球錦標賽}}
-{{MedalGold|1998年印度西孟加拉邦加爾各答|}}
-{{MedalCompetition|東亞運動會}}
-{{MedalGold|2001年日本大阪府|}}
-{{MedalCompetition|[[亚洲篮球锦标赛]]}}
-{{MedalGold|{{tsl|en|2001 ABC Championship|2001年中國上海市}}|}}
-{{MedalGold|{{tsl|en|2003 ABC Championship|2003年中國黑龍江省哈爾濱市}}|}}
-{{MedalGold|{{tsl|en|2005 FIBA Asia Championship|2005年卡達杜哈}}|}}
-{{MedalCompetition|夏季世界大學生運動會}}
-{{MedalSilver|2001年中國北京市|}}
-{{MedalCompetition|亞洲運動會}}
-{{MedalSilver|[[2002年亞洲運動會|2002年韓國釜山廣域市]]|}}
-}}
+总结的工作包括：
+1. 每个英文的属性一般有中文和它对应，我们需要找到对应的中英文对应的属性，例如`gender`与`性别`
+2. 有的模板书会添加对属性的解释，我们需要将解释记录下来方便下一步的工作
+3. 对所有模板那中出现属性的次数进行计数，用来排序
+   
+最后形成如下的数据形式：
+
+```python
+{
+   "属性名称":{					    # 英文为属性名称比较好
+       "trigger":("中文","英文"),	# 与该属性
+       "count":0,       			# 在模板中出现的次数
+       "explain":""				    # 对该属性的解释
+   }
+}
 ```
 
-我们需要抽取出人物的基本属性，为此我们需要确定属性的含义以及属性的抽取方法
+[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/code/GetBigInfobox.py)
 
-步骤：
+该方案共抽出1100个属性
 
-1. 将模板的属性表全部列出，形成一个大的，整体的模板，包括：
-
-2. 1. 对每个infobox模板拆分，这时一个属性的内容有：中文，英文，额外格式信息
-   2. 将重复的放在一起，并计数，重复的包括英文和中文
-
-   最后形成如下的结构：
-
-   ```python
-   {
-       "属性名称":{					# 英文为属性名称比较好
-           "trigger":("中文","英文"),	# 与该属性
-           "count":0,       			# 在模板中出现的次数
-           "explain":""				# 对该属性的解释
-       }
-   }
-   ```
-
-3. 分析模板中的属性值，设计抽取规则
+[抽取结果](https://github.com/ReturnTR/PensonKG/blob/main/data/infobox_templete.json)
 
 
 
-[抽取代码]()
-
-[抽取结果]()
-
-## 编写抽取规则
+### 编写抽取规则
 
 查看每个属性的解释说明，编写规则进行抽取
 
