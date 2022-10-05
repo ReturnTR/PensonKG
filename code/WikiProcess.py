@@ -1,4 +1,4 @@
-
+# coding=utf-8
 # Description : 抽取出wiki页面的四项，保存到新文件中
 
 from gensim.corpora.wikicorpus import extract_pages,filter_wiki

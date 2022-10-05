@@ -92,9 +92,19 @@ wiki数据源自wikidump
 
 目标是人物图谱，所以需要将人物页面截取过来，由于判断是否是人物的方法很复杂，因此先通过infobox里面的标识识别出部分的人物
 
+为此需要先找到全部的infobox人物模板标识，Wiki提供了人物 infobox 的标识，见[分类:人物信息框模板 - 维基百科，自由的百科全书 (wikipedia.org)](https://zh.wikipedia.org/wiki/Category:人物信息框模板)（在wiki中infobox被称为信息框），例如
+
+```xml
+{{Infobox sportsperson\n| honorific_prefix = \n| name = 高敏\n| honorific_suffix = \n| image = \n....}}
+```
+
+其中`Infobox sportsperson`为infobox的开头，表示页面的类型，而该类型出来在上述的人物信息框模板中，因此该页面被认为是人物的页面
+
+为此，我们需要将该网页下所有的模板记录在案，然后对每一个页面的infobox开头进行匹配，匹配成功则将其归类到人物页面中
 
 
-为此需要先找到全部的infobox人物模板标识，找到了该网页下的所有模板那
+
+代码
 
 
 
