@@ -178,7 +178,8 @@ wiki数据源自wikidump
 
 查看每个属性的解释说明，编写规则进行抽取
 
-为了规范抽取方式，采用接口进行抽取，包括：
+为了规范抽取方式，采用继承接口的方式实现抽取规则，见代码
 
+[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/code/attribute_filter.py)
 
-
+需要说明的是，抽取规则复杂多变
