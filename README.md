@@ -1,30 +1,4 @@
-Table of Contents
-=================
 
-Header: Strict-Transport-Security=max-age=31536000; includeSubdomains; preload
-Header: X-Xss-Protection=0
-Header: Vary=Accept
-Header: X-Ratelimit-Reset=1664958091
-Header: X-Ratelimit-Resource=core
-Header: Etag=W/"7e846b8981055c5bb19271218edeb297b78cb1e08b2e589dad735bb059ec2533"
-Header: X-Github-Media-Type=github.v3; format=json
-Header: X-Ratelimit-Remaining=43
-Header: X-Ratelimit-Used=17
-Header: Access-Control-Allow-Origin=*
-Header: Date=Wed, 05 Oct 2022 07:56:35 GMT
-Header: Content-Type=text/html;charset=utf-8
-Header: Cache-Control=public, max-age=60, s-maxage=60
-Header: X-Github-Request-Id=E222:0C92:11B83C7:1283BAF:633D38B3
-Header: X-Content-Type-Options=nosniff
-Header: Referrer-Policy=origin-when-cross-origin, strict-origin-when-cross-origin
-Header: Content-Security-Policy=default-src 'none'
-Header: Server=GitHub.com
-Header: Access-Control-Expose-Headers=ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateL
-imit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprec
-ation, Sunset
-Header: X-Commonmarker-Version=0.23.6
-Header: X-Ratelimit-Limit=60
-Header: X-Frame-Options=deny
 
 
 # Wiki原始语料获取
