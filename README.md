@@ -137,6 +137,11 @@ wiki数据源自wikidump
 
 [抽取代码和模板列表](https://github.com/ReturnTR/PensonKG/blob/main/code/GetPersonViaInfobox.py)
 
+共抽取出88404个人物页面，相关数据如下：
+
+|全部数量 | 有infobox的数量 | 有infobox的人物数量|
+| :------: | :---: | :---:|
+|1294948 | 466181 | 88404 |
 ## 对人物Infobox进行属性抽取
 
 我们需要抽取出人物的基本属性，为此我们需要确定**属性的定义**以及**属性的抽取方法**
@@ -150,7 +155,7 @@ wiki数据源自wikidump
 3. 对所有模板那中出现属性的次数进行计数，用来排序
    
 最后形成如下的数据形式：
-hehe
+
 ```python
 {
    "属性名称":{					# 英文为属性名称比较好
