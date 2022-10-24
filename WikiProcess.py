@@ -1,14 +1,13 @@
-# coding=utf-8
-# Description : 抽取出wiki页面的四项，保存到新文件中
-
 from gensim.corpora.wikicorpus import extract_pages,filter_wiki
 import bz2file
 import re
 from tqdm import tqdm
-from .CommonTools.TextTool import ConvertChineseSimplified
-from .CommonTools.JsonTool import *
+from tools import *
 def save_promote(s):
-    """仅保留[[]]或[]的格式"""
+    """
+    仅保留[[]]或[]的格式
+    将繁体转化成简体
+    """
     s = re.sub(':*{\|[\s\S]*?\|}', '', s)
     s = re.sub('<gallery>[\s\S]*?</gallery>', '', s)
     s = re.sub('(.){{([^{}\n]*?\|[^{}\n]*?)}}', '\\1[[\\2]]', s)
@@ -17,11 +16,12 @@ def save_promote(s):
     s = re.sub('\n+', '\n', s)
     s = re.sub('\n[:;]|\n +', '\n', s)
     s = re.sub('\n==', '\n\n==', s)
-    s=ConvertChineseSimplified.A2B(s)  #繁体转简体，需要有Opencc库
+    s=t2s(s)
     return s
 
 def process_wiki_page(s):
     """
+    截取网页的四项
     结构：
         infobox
         简介
@@ -34,7 +34,6 @@ def process_wiki_page(s):
     head=s[0]
     tail=s[-1]
     item["summary"]=save_promote(head)
-    # 这么搞不太对，应采用模板进行匹配，不，没有模板
     infobox=re.search("\{\{Infobox[\s\S]*\}\}",head)
     
     if infobox:
@@ -52,8 +51,12 @@ def process_wiki_page(s):
     item["para"]=save_promote(para)
     return item
 
-def extract_4_item_of_wiki_bz2_file(bz2_file,des_file):
-    wiki = extract_pages(bz2file.open(bz2_file))
+def main():
+    json_file="data/wiki_page_1.json"
+
+
+    # 该工具用来遍历wiki文件，能看到剩余时间
+    wiki = extract_pages(bz2file.open("data/zhwiki-20220801-pages-articles-multistream.xml.bz2"))
     w = tqdm(wiki, desc=u'已获取0篇文章')
     count=0
     data=[]
@@ -66,7 +69,5 @@ def extract_4_item_of_wiki_bz2_file(bz2_file,des_file):
             page_info["name"]=title
             data.append(page_info)
             w.set_description(u'已获取%s篇文章'%count)
-    save_json(data,des_file)
-
-if __name__=="__main__":
-    extract_4_item_of_wiki_bz2_file("data/zhwiki-20220801-pages-articles-multistream.xml.bz2","data/wiki_page_4_item.json")
+    save_json(data,json_file)
+main()
