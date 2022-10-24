@@ -221,7 +221,7 @@ wiki数据源自wikidump
 
 整理过的属性加符号进行区分
 
-[构建代码](https://dumps.wikimedia.org/zhwiki/latest/)
+[构建代码](https://github.com/ReturnTR/PensonKG/blob/main/code/MakeNeo4jKG.py)
 
 ## 细化规则
 
