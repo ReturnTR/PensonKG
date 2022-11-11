@@ -112,7 +112,7 @@ wiki数据源自wikidump
 - 在正文和简介中，除了[[]]标签和[]标签，去掉所有的其他标签，只保留文字与标点符号
 - 保留infobox与category的全部内容
 
-[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/code/WikiProcess.py)
+[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/WikiProcess.py)
 
 ## 选取人物页面
 
@@ -146,7 +146,7 @@ wiki数据源自wikidump
 
 为此，我们需要将该网页下所有的模板记录在列表中，然后对每一个页面的infobox开头进行匹配，匹配成功则将其归类到人物页面中
 
-[抽取代码和模板列表](https://github.com/ReturnTR/PensonKG/blob/main/code/GetPersonViaInfobox.py)
+[抽取代码和模板列表](https://github.com/ReturnTR/PensonKG/blob/main/GetPersonViaInfobox.py)
 
 共抽取出88404个人物页面，相关数据如下：
 
@@ -200,7 +200,7 @@ wiki数据源自wikidump
 
 该工作需要大量的人工操作，包括查看大量属性值，属性名称，将信息手动添加进模板
 
-最终构建出[Schema](https://github.com/ReturnTR/PensonKG/blob/main/data/statistics_data/person_key_count.json)文件，文件格式如下（上列表示属性的栏目，下列为解释）：
+最终构建出[Schema](https://github.com/ReturnTR/PensonKG/blob/main/data/statistics_data/Schema.xlsx)文件，文件格式如下（上列表示属性的栏目，下列为解释）：
 名称	别名	实体名称	是否为人物关系	抽取方法	数量占比	中文名
 
 |名称 | 别名 | 实体名称| 是否为人物关系 | 抽取方法 | 数量占比 | 中文名 |
@@ -222,9 +222,13 @@ wiki数据源自wikidump
 - 不抽取（抽取方法为其他字符）
 
 
-[抽取代码和统计信息](https://github.com/ReturnTR/PensonKG/blob/main/AttributeFilter.py)
+[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/AttributeFilter.py)
 
+统计信息
 
+![image](https://github.com/ReturnTR/PensonKG/blob/main/data/statistics_data/non_person_entity_type_count.png)
+![image](https://github.com/ReturnTR/PensonKG/blob/main/data/statistics_data/non_person_entity_type_num.png)
+![image](https://github.com/ReturnTR/PensonKG/blob/main/data/statistics_data/relation_type_count.png)
 
 
 
@@ -265,8 +269,9 @@ Wiki页面中大都使用"()"来表示该人物的额外信息，用此可以添
 "王凤朝": ["王凤朝 (1965年)","王凤朝 (京剧鼓师)","王凤朝","王凤朝 (1954年)"]
 ```
 
-[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/DuplicatedNameExtraction.py)
-[抽取结果](https://github.com/ReturnTR/PensonKG/blob/main/temp_data/wiki_page_duplicated.json)
+[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/DuplicateNameExtraction.py)
+
+[抽取结果](https://github.com/ReturnTR/PensonKG/blob/main/data/temp_data/wiki_page_duplicated.json)
 
 ## 根据wiki的重定向信息扩充人物关系
 
@@ -278,6 +283,6 @@ Wiki页面中大都使用"()"来表示该人物的额外信息，用此可以添
 
 因此我们需要将重定向信息与页面连接起来
 
-[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/DuplicatedNameExtraction.py)
-[重定向信息](https://github.com/ReturnTR/PensonKG/blob/main/temp_data/wiki_page_redirect.json)
+[抽取代码](https://github.com/ReturnTR/PensonKG/blob/main/DuplicateNameExtraction.py)
+[重定向信息](https://github.com/ReturnTR/PensonKG/blob/main/data/temp_data/wiki_page_redirect.json)
 
