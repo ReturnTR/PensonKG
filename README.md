@@ -441,7 +441,10 @@ summary有用的信息：
 场上位置 {'gold_count': 0, 'predict_count': 0, 'right_count': 0, 'exist_count': 0, 'P': -1, 'R': -1, 'F': -1}
 
 Process finished with exit code 0
-
+### 错误分析
+   1. 位置问题明显
+   2. 远程监督问题出现的漏标与错标
+   3. 长实体问题
 
 ### 关系抽取
 数据构造：把人物的summary和para中含有人物的实体标出来，作为标注信息
